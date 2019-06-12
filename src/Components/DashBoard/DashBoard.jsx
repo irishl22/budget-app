@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from 'axios'
+import './DashBoard.css'
 
 class DashBoard extends Component {
   constructor(props) {
@@ -91,7 +92,7 @@ render() {
   })
   console.log(this.state.expenses)
     return (
-      <div>
+      <div className="main-container">
         <h4>Checking Account: ${this.state.checking}</h4>
         <h4>Savings Account: ${this.state.savings}</h4>
 
