@@ -62,24 +62,32 @@ handleExpenseInput(prop, val) {
   })
 }
 
-addExpense = async expense => {
-  await axios.post('/api/newExpense', expense).then(res => {
+addExpense = expense => {
+  axios.post('/api/newExpense', expense).then(res => {
     this.setState({
-      expenses: res.data
+      expenses: [ ...this.state.expenses, res.data ]
     })
   }).catch(err => console.log(err))
 }
 
-handleAddExp = async () => {
+handleAddExp = () => {
   let { expense_type, expense_amount, expense_date } = this.state
   let expense = { expense_type, expense_amount, expense_date}
-  await this.addExpense(expense)
+  this.addExpense(expense)
+}
+
+componentDidMount() {
+  axios.get('/api/expenses').then(res => {
+    this.setState({
+      expenses: res.data
+    })
+  })
 }
 
 
 render() {
   let expenseList = this.state.expenses.map(expense => {
-    return <span>{expense.expense_type}</span>
+    return <span key={expense.expense_id}>{expense.expense_type}</span>
   })
   console.log(this.state.expenses)
     return (
